@@ -1,0 +1,11 @@
+data/
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+eval/reports/*.json
+.venv/
+*.egg-info/
+dist/
+*.sqlite

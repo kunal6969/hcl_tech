@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": [
+      "Bash(pytest)",
+      "Bash(pytest *)",
+      "Bash(python *)",
+      "Bash(python3 *)",
+      "Bash(py *)",
+      "Bash(ruff *)",
+      "Bash(curl *)",
+      "Bash(uvicorn *)",
+      "Bash(streamlit *)",
+      "Bash(pip install *)",
+      "Bash(pip show *)",
+      "Bash(pip list *)",
+      "Bash(pip freeze *)",
+      "Bash(git status)",
+      "Bash(git status *)",
+      "Bash(git diff)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git show *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git tag)",
+      "Bash(git tag *)",
+      "Bash(git branch)",
+      "Bash(git branch *)",
+      "Bash(git rev-parse *)",
+      "Bash(git stash *)",
+      "Bash(git shortlog *)",
+      "Bash(git config user.name)",
+      "Bash(git config user.email)",
+      "Bash(git fetch *)",
+      "Bash(git pull --ff-only *)",
+      "Bash(git pull --ff-only)",
+      "Bash(git init)",
+      "Bash(docker compose *)",
+      "Bash(docker ps *)",
+      "Bash(docker logs *)",
+      "Bash(ollama list)",
+      "Bash(ollama ps)",
+      "Bash(ollama show *)",
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(wc *)",
+      "Bash(mkdir *)",
+      "Bash(touch *)",
+      "Bash(cp *)",
+      "Bash(which *)",
+      "Bash(date *)",
+      "Bash(pdftotext *)",
+      "Bash(pandoc *)"
+    ],
+    "ask": [
+      "Bash(git push *)",
+      "Bash(git reset *)",
+      "Bash(git rebase *)",
+      "Bash(git checkout *)",
+      "Bash(git restore *)",
+      "Bash(docker compose down *)",
+      "Bash(rm *)",
+      "Bash(mv *)"
+    ],
+    "deny": [
+      "Bash(git push --force *)",
+      "Bash(git push -f *)",
+      "Bash(rm -rf *)",
+      "Read(./.env)",
+      "Read(./.env.local)",
+      "Read(./.env.production)",
+      "Read(data/*)",
+      "Read(*.sqlite)",
+      "Read(*.duckdb)",
+      "Read(*.parquet)",
+      "Read(eval/reports/*.json)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "timeout": 15,
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && echo '=== HANDOFF_STATE.md ===' && cat HANDOFF_STATE.md 2>/dev/null; echo; echo '=== PROGRESS_LOG.md (last 15) ==='; tail -n 15 PROGRESS_LOG.md 2>/dev/null; echo; echo '=== git ==='; git log --oneline -8 2>/dev/null; git status --short 2>/dev/null | head -n 20; exit 0"
+          }
+        ]
+      }
+    ]
+  },
+  "env": {
+    "PYTHONUNBUFFERED": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "70"
+  }
+}

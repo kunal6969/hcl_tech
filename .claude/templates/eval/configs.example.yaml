@@ -1,0 +1,4 @@
+# file: eval/configs.example.yaml
+A: {configurable: {top_k: 4, min_overlap: 0.34}}
+B: {configurable: {top_k: 8, min_overlap: 0.25}}
+C: {env: {EMBED_MODEL: "BAAI/bge-small-en-v1.5"}, configurable: {top_k: 5}}   # needs re-ingest into a new collection

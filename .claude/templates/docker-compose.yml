@@ -1,0 +1,29 @@
+# file: docker-compose.yml
+services:
+  api:
+    build: .
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+      DATA_DIR: /app/data
+    volumes:
+      - ./data:/app/data
+      - ./problem:/app/problem:ro
+    ports: ["8000:8000"]
+    extra_hosts: ["host.docker.internal:host-gateway"]
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+  ui:
+    build: .
+    command: streamlit run ui/streamlit_app.py --server.port 8501 --server.address 0.0.0.0
+    environment:
+      API_BASE_URL: http://api:8000
+    ports: ["8501:8501"]
+    depends_on:
+      api:
+        condition: service_healthy
